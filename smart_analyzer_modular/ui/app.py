@@ -35,7 +35,6 @@ class SmartExpenseAnalyzer(ctk.CTk):
         # Default theme (light mode with colorful colors)
         self.dark_mode = False
         self.current_theme = ThemeManager.get_theme(self.dark_mode)
-        self.last_shown_achievement = None
         
         # Configure appearance
         ctk.set_appearance_mode("light")

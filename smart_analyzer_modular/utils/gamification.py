@@ -102,7 +102,7 @@ class GamificationManager:
         if current_total <= budget * 0.7 and not self.db.has_achievement(self.user_id, 'Smart Saver'):
             self.db.add_achievement(self.user_id,
                 'Smart Saver',
-                f'Spent only ${current_total:.2f} of ${budget:.2f} budget'
+                f'Spent only ₹{current_total:.2f} of ₹{budget:.2f} budget'
             )
         
         # Weekend Warrior

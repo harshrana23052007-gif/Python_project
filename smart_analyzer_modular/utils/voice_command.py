@@ -10,7 +10,7 @@ class VoiceCommandParser:
     """Parses voice commands for expense entry"""
     
     def __init__(self):
-        self.currency_symbol = "$"
+        self.currency_symbol = "₹"
         self.category_keywords = {
             'food': ['food', 'eat', 'lunch', 'dinner', 'breakfast', 'restaurant', 'coffee', 'pizza', 'burger'],
             'travel': ['travel', 'uber', 'taxi', 'bus', 'train', 'flight', 'gas', 'parking'],
@@ -64,7 +64,7 @@ class VoiceCommandParser:
             result['description'] = description
         
         result['success'] = True
-        result['message'] = f"Parsed: ${result['amount']:.2f} for {result['category']}"
+        result['message'] = f"Parsed: ₹{result['amount']:.2f} for {result['category']}"
         
         return result
     

@@ -204,18 +204,18 @@ class SimulationEngine:
 📊 WHAT-IF SIMULATION RESULTS
 
 Current State:
-  💰 Total Spending: ${sim['total_spent_before']:.2f}
-  📋 Remaining Budget: ${sim['remaining_before']:.2f}
+  💰 Total Spending: ₹{sim['total_spent_before']:.2f}
+  📋 Remaining Budget: ₹{sim['remaining_before']:.2f}
   Status: {'✅ Under budget' if sim['within_budget_before'] else '⚠️ Over budget'}
 
 After Reduction:
-  💰 New Total Spending: ${sim['total_spent_after']:.2f}
-  📋 New Remaining Budget: ${sim['remaining_after']:.2f}
+  💰 New Total Spending: ₹{sim['total_spent_after']:.2f}
+  📋 New Remaining Budget: ₹{sim['remaining_after']:.2f}
   Status: {'✅ Under budget' if sim['within_budget_after'] else '⚠️ Over budget'}
 
 Impact:
-  💡 Potential Savings: ${sim['total_savings']:.2f}
-  📈 Budget Improvement: ${sim['improvement']:.2f}
+  💡 Potential Savings: ₹{sim['total_savings']:.2f}
+  📈 Budget Improvement: ₹{sim['improvement']:.2f}
 """
         
         return summary.strip()

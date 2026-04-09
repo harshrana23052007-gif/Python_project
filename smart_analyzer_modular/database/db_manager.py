@@ -306,10 +306,34 @@ class DatabaseManager:
     
     def export_to_excel(self, user_id, file_path):
         """Export expenses to Excel for a user"""
-        expenses = self.get_all_expenses(user_id)
-        df = pd.DataFrame(expenses, columns=['ID', 'User ID', 'Amount', 'Category', 'Date', 'Description', 'Created At'])
-        df.to_excel(file_path, index=False, sheet_name='Expenses')
-        return True
+        try:
+            expenses = self.get_all_expenses(user_id)
+            if not expenses:
+                raise ValueError("No expenses to export")
+            
+            df = pd.DataFrame(expenses, columns=['ID', 'User ID', 'Amount', 'Category', 'Date', 'Description', 'Created At'])
+            
+            # Create Excel writer with formatting
+            with pd.ExcelWriter(file_path, engine='openpyxl') as writer:
+                df.to_excel(writer, sheet_name='Expenses', index=False)
+                
+                # Get the workbook and worksheet
+                workbook = writer.book
+                worksheet = writer.sheets['Expenses']
+                
+                # Auto-adjust column widths
+                for idx, col in enumerate(df.columns, 1):
+                    max_length = max(
+                        df[col].astype(str).map(len).max(),
+                        len(col)
+                    )
+                    worksheet.column_dimensions[chr(64 + idx)].width = max_length + 2
+            
+            return True
+        except ImportError:
+            raise Exception("openpyxl library not installed. Please install it: pip install openpyxl")
+        except Exception as e:
+            raise Exception(f"Excel export error: {str(e)}")
     
     def get_monthly_totals(self, user_id, year):
         """Get monthly totals for a user for a specific year"""

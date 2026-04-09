@@ -48,12 +48,12 @@ class FinancialAdvisor:
         
         # Budget status
         if total_spent > budget:
-            budget_status = f"Over budget by ${total_spent - budget:.2f}"
+            budget_status = f"Over budget by ₹{total_spent - budget:.2f}"
         elif total_spent > budget * 0.9:
             budget_status = f"Approaching budget limit (90% spent)"
         else:
             remaining = budget - total_spent
-            budget_status = f"On track! ${remaining:.2f} remaining"
+            budget_status = f"On track! ₹{remaining:.2f} remaining"
         
         return {
             'overspending_categories': category_analysis['alerts'],
@@ -144,7 +144,7 @@ class FinancialAdvisor:
             savings = top_alert['savings_potential']
             tips.append(
                 f"💡 Reduce {top_alert['category']} spending by just 10% "
-                f"to save ${savings:.2f} this month!"
+                f"to save ₹{savings:.2f} this month!"
             )
         
         # Tip 2: Day of week analysis
@@ -162,7 +162,7 @@ class FinancialAdvisor:
         if total_spent > budget:
             overage = total_spent - budget
             tips.append(
-                f"⚠️ Your current spending exceeds budget by ${overage:.2f}. "
+                f"⚠️ Your current spending exceeds budget by ₹{overage:.2f}. "
                 f"Focus on reducing luxury categories this month."
             )
         elif total_spent > budget * 0.8:
@@ -175,8 +175,8 @@ class FinancialAdvisor:
             remaining_budget = budget - total_spent
             daily_allowance = remaining_budget / remaining_days if remaining_days > 0 else 0
             tips.append(
-                f"✅ Excellent! You have ${remaining_budget:.2f} left. "
-                f"Daily allowance: ${daily_allowance:.2f}"
+                f"✅ Excellent! You have ₹{remaining_budget:.2f} left. "
+                f"Daily allowance: ₹{daily_allowance:.2f}"
             )
         
         # Tip 4: Consistency

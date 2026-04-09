@@ -6,60 +6,60 @@ Handles light and dark mode theming with CustomTkinter
 class ThemeManager:
     """Manages light and colorful themes for CustomTkinter"""
     
-    # Light theme with pastel colors
+    # Light theme with enhanced modern colors
     LIGHT_THEME = {
-        'bg': '#f8f9fa',
-        'fg': '#2c3e50',
-        'sidebar_bg': '#e8f4f8',
-        'button_bg': '#3498db',
+        'bg': '#f5f7fa',
+        'fg': '#1a202c',
+        'sidebar_bg': '#e6f2ff',
+        'button_bg': '#2563eb',
         'button_fg': '#ffffff',
-        'button_hover': '#2980b9',
+        'button_hover': '#1d4ed8',
         'frame_bg': '#ffffff',
-        'entry_bg': '#ecf0f1',
-        'entry_fg': '#2c3e50',
-        'entry_border': '#bdc3c7',
-        'accent': '#3498db',
-        'accent_light': '#d6eaf8',
-        'text_primary': '#2c3e50',
-        'text_secondary': '#7f8c8d',
-        'border': '#d0d0d0',
-        'success': '#27ae60',
-        'warning': '#f39c12',
-        'danger': '#e74c3c',
-        'info': '#2980b9',
+        'entry_bg': '#f0f4f8',
+        'entry_fg': '#1a202c',
+        'entry_border': '#cbd5e1',
+        'accent': '#2563eb',
+        'accent_light': '#dbeafe',
+        'text_primary': '#1a202c',
+        'text_secondary': '#64748b',
+        'border': '#e2e8f0',
+        'success': '#10b981',
+        'warning': '#f59e0b',
+        'danger': '#ef4444',
+        'info': '#0ea5e9',
         # Card colors for visual variety
         'card_bg': '#ffffff',
-        'card_border': '#bdc3c7',
+        'card_border': '#e2e8f0',
         # Sidebar button colors
-        'sidebar_button_hover': '#d6eaf8',
-        'sidebar_text': '#2c3e50'
+        'sidebar_button_hover': '#dbeafe',
+        'sidebar_text': '#1a202c'
     }
     
     # Modern dark theme (alternative)
     DARK_THEME = {
-        'bg': '#1a1a2e',
-        'fg': '#eaeaea',
-        'sidebar_bg': '#16213e',
-        'button_bg': '#0f3460',
+        'bg': '#0f172a',
+        'fg': '#f1f5f9',
+        'sidebar_bg': '#1e293b',
+        'button_bg': '#3b82f6',
         'button_fg': '#ffffff',
-        'button_hover': '#1a5f7a',
-        'frame_bg': '#0f3460',
-        'entry_bg': '#2d3561',
-        'entry_fg': '#eaeaea',
-        'entry_border': '#3d4563',
-        'accent': '#00d4ff',
-        'accent_light': '#1a5f7a',
-        'text_primary': '#eaeaea',
-        'text_secondary': '#a0a0a0',
-        'border': '#3d3d3d',
-        'success': '#4ec9b0',
-        'warning': '#ce9178',
-        'danger': '#f48771',
-        'info': '#00d4ff',
-        'card_bg': '#16213e',
-        'card_border': '#3d4563',
-        'sidebar_button_hover': '#1a5f7a',
-        'sidebar_text': '#eaeaea'
+        'button_hover': '#2563eb',
+        'frame_bg': '#1e293b',
+        'entry_bg': '#334155',
+        'entry_fg': '#f1f5f9',
+        'entry_border': '#475569',
+        'accent': '#3b82f6',
+        'accent_light': '#1e3a8a',
+        'text_primary': '#f1f5f9',
+        'text_secondary': '#cbd5e1',
+        'border': '#334155',
+        'success': '#10b981',
+        'warning': '#f59e0b',
+        'danger': '#f87171',
+        'info': '#0ea5e9',
+        'card_bg': '#1e293b',
+        'card_border': '#334155',
+        'sidebar_button_hover': '#1e3a8a',
+        'sidebar_text': '#f1f5f9'
     }
     
     @staticmethod

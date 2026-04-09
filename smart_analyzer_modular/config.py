@@ -5,7 +5,7 @@ Configuration constants for Smart Expense Analyzer
 # Database
 DATABASE_NAME = "expenses.db"
 DEFAULT_BUDGET = 5000
-DEFAULT_CURRENCY = "USD"
+DEFAULT_CURRENCY = "INR"
 
 # UI Constants
 DEFAULT_THEME = "dark"  # "dark" or "light"

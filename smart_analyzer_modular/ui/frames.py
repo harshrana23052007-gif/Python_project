@@ -52,7 +52,7 @@ class LoginFrame(ctk.CTkFrame):
         subtitle.pack(pady=(0, 40))
         
         # Card frame
-        card = ctk.CTkFrame(center_frame, fg_color=theme['card_bg'], corner_radius=15, border_width=2, border_color=theme['card_border'])
+        card = ctk.CTkFrame(center_frame, fg_color=theme['card_bg'], corner_radius=20, border_width=2, border_color=theme['card_border'])
         card.pack(padx=20, pady=20)
         
         inner_frame = ctk.CTkFrame(card, fg_color=theme['card_bg'])
@@ -114,7 +114,7 @@ class LoginFrame(ctk.CTkFrame):
             text="Login",
             font=(config.FONT_FAMILY, 14, 'bold'),
             height=40,
-            corner_radius=8,
+            corner_radius=12,
             fg_color=theme['button_bg'],
             hover_color=theme['button_hover'],
             text_color=theme['button_fg'],
@@ -127,7 +127,7 @@ class LoginFrame(ctk.CTkFrame):
             text="Sign Up",
             font=(config.FONT_FAMILY, 14, 'bold'),
             height=40,
-            corner_radius=8,
+            corner_radius=12,
             fg_color=theme['accent_light'],
             hover_color=theme['button_hover'],
             text_color=theme['text_primary'],
@@ -323,25 +323,6 @@ class DashboardFrame(ctk.CTkFrame):
         self.advisor_text.pack(fill="both", expand=True)
         self.advisor_text.insert(tk.END, "Loading advisor data...")
         
-        # Achievements
-        achievements_frame = self._create_section_frame(scrollable, "🏆 Achievements", theme)
-        self.achievements_canvas = tk.Canvas(
-            achievements_frame,
-            height=120,
-            bg=theme['entry_bg'],
-            highlightthickness=0,
-            relief=tk.FLAT
-        )
-        self.achievements_canvas.pack(fill="both", expand=True)
-        
-        self.streak_label = ctk.CTkLabel(
-            achievements_frame,
-            text="Loading achievements...",
-            font=(config.FONT_FAMILY, 11),
-            text_color=theme['text_primary']
-        )
-        self.streak_label.pack(pady=10)
-        
         # What-If Simulator
         simulator_frame = self._create_section_frame(scrollable, "🎯 What-If Simulator", theme)
         
@@ -441,7 +422,7 @@ class DashboardFrame(ctk.CTkFrame):
     
     def _create_stat_card(self, parent, title, value, emoji, color):
         """Create a colorful stat card"""
-        card = ctk.CTkFrame(parent, fg_color=color, corner_radius=10)
+        card = ctk.CTkFrame(parent, fg_color=color, corner_radius=15)
         card.pack(side="left", padx=10, fill="both", expand=True)
         
         ctk.CTkLabel(
@@ -464,7 +445,7 @@ class DashboardFrame(ctk.CTkFrame):
     def _create_section_frame(self, parent, title, theme):
         """Create a section frame with title"""
         # Outer frame with border
-        outer = ctk.CTkFrame(parent, fg_color=theme['card_bg'], corner_radius=10, border_width=2, border_color=theme['card_border'])
+        outer = ctk.CTkFrame(parent, fg_color=theme['card_bg'], corner_radius=15, border_width=2, border_color=theme['card_border'])
         outer.pack(fill="x", padx=20, pady=10)
         
         # Title
@@ -532,35 +513,6 @@ class DashboardFrame(ctk.CTkFrame):
                     for i, tip in enumerate(analysis['saving_tips'], 1):
                         self.advisor_text.insert(tk.END, f"{i}. {tip}\n")
             
-            # Update achievements
-            try:
-                current_streak, longest_streak, _ = self.db.get_streak_info(user_id)
-                self.streak_label.configure(text=f"Current: {current_streak} days | Longest: {longest_streak} days")
-            except:
-                pass
-            
-            # Draw badges
-            self.achievements_canvas.delete("all")
-            try:
-                if self.gamification:
-                    earned_badges = self.gamification.get_earned_badges()
-                    if earned_badges:
-                        x_pos = 20
-                        y_start = 15
-                        for badge in earned_badges:
-                            try:
-                                self.achievements_canvas.create_text(x_pos, y_start, text=f"{badge['icon']}", font=("Arial", 40), anchor="nw")
-                                self.achievements_canvas.create_text(x_pos + 50, y_start, text=f"{badge['name']}\n{badge['description']}", font=(config.FONT_FAMILY, 9), fill=theme['text_primary'], anchor="nw", width=150)
-                                x_pos += 250
-                            except (KeyError, ValueError):
-                                continue
-                    else:
-                        self.achievements_canvas.create_text(10, 20, text="No badges earned yet. Add more expenses to earn achievements!", font=(config.FONT_FAMILY, 11), fill=theme['text_secondary'], anchor="nw")
-                else:
-                    self.achievements_canvas.create_text(10, 20, text="Loading achievements...", font=(config.FONT_FAMILY, 11), fill=theme['text_secondary'], anchor="nw")
-            except Exception as e:
-                self.achievements_canvas.create_text(10, 20, text="Achievement data unavailable", font=(config.FONT_FAMILY, 11), fill=theme['text_secondary'], anchor="nw")
-            
             # Category breakdown
             now = datetime.now()
             categories = self.db.get_category_summary(user_id, now.year, now.month)
@@ -610,16 +562,6 @@ class AddExpenseFrame(ctk.CTkFrame):
         super().__init__(parent, fg_color=controller.current_theme['bg'])
         self.controller = controller
         self.db = controller.db
-        
-        self.voice_recognizer = None
-        self.voice_parser = None
-        try:
-            from utils.voice_command import VoiceRecognizer, VoiceCommandParser
-            self.voice_recognizer = VoiceRecognizer()
-            self.voice_parser = VoiceCommandParser()
-        except Exception as e:
-            pass
-        
         self.create_widgets()
     
     def create_widgets(self):
@@ -637,7 +579,7 @@ class AddExpenseFrame(ctk.CTkFrame):
         form_container = ctk.CTkFrame(self, fg_color=theme['bg'])
         form_container.pack(fill="both", expand=True, padx=20, pady=20)
         
-        form = ctk.CTkFrame(form_container, fg_color=theme['card_bg'], corner_radius=10, border_width=2, border_color=theme['card_border'])
+        form = ctk.CTkFrame(form_container, fg_color=theme['card_bg'], corner_radius=15, border_width=2, border_color=theme['card_border'])
         form.pack(fill="x", padx=20, pady=20)
         
         inner = ctk.CTkFrame(form, fg_color=theme['card_bg'])
@@ -669,58 +611,11 @@ class AddExpenseFrame(ctk.CTkFrame):
         button_frame = ctk.CTkFrame(inner, fg_color=theme['card_bg'])
         button_frame.pack(fill="x", pady=(10, 0))
         
-        save_btn = ctk.CTkButton(button_frame, text="💾 Save Expense", height=40, font=(config.FONT_FAMILY, 13, 'bold'), fg_color=theme['success'], hover_color='#1e7e34', text_color="#ffffff", command=self.save_expense)
+        save_btn = ctk.CTkButton(button_frame, text="\ud83d\udcbe Save Expense", height=40, font=(config.FONT_FAMILY, 13, 'bold'), corner_radius=12, fg_color=theme['success'], hover_color='#059669', text_color="#ffffff", command=self.save_expense)
         save_btn.pack(side="left", padx=5, fill="both", expand=True)
         
-        clear_btn = ctk.CTkButton(button_frame, text="🔄 Clear", height=40, font=(config.FONT_FAMILY, 13, 'bold'), fg_color=theme['accent_light'], hover_color=theme['button_hover'], text_color=theme['text_primary'], command=self.clear_form)
+        clear_btn = ctk.CTkButton(button_frame, text="\ud83d\udd04 Clear", height=40, font=(config.FONT_FAMILY, 13, 'bold'), corner_radius=12, fg_color=theme['accent_light'], hover_color=theme['button_hover'], text_color=theme['text_primary'], command=self.clear_form)
         clear_btn.pack(side="left", padx=5, fill="both", expand=True)
-        
-        voice_btn = ctk.CTkButton(button_frame, text="🎤 Voice", height=40, font=(config.FONT_FAMILY, 13, 'bold'), fg_color=theme['info'], hover_color='#1a5f7a', text_color="#ffffff", command=self.add_by_voice)
-        voice_btn.pack(side="left", padx=5, fill="both", expand=True)
-        self.voice_button = voice_btn
-        
-        if not self.voice_recognizer:
-            self.voice_button.configure(state="disabled")
-    
-    def add_by_voice(self):
-        """Add expense using voice"""
-        if not self.voice_recognizer:
-            messagebox.showerror("Voice Not Available", "Voice recognition is not available.\nPlease install PyAudio.")
-            return
-        
-        try:
-            status_window = ctk.CTkToplevel(self.controller)
-            status_window.title("Voice Input")
-            status_window.geometry("300x120")
-            
-            ctk.CTkLabel(status_window, text="🎤 Listening...", font=(config.FONT_FAMILY, 16, 'bold')).pack(pady=20)
-            ctk.CTkLabel(status_window, text='Say: "Add 500 food expense"', font=(config.FONT_FAMILY, 12)).pack(pady=10)
-            
-            status_window.update()
-            
-            success, text, error = self.voice_recognizer.listen()
-            if not success:
-                status_window.destroy()
-                messagebox.showerror("Error", f"Voice input failed: {error}")
-                return
-            
-            parsed = self.voice_parser.parse_command(text)
-            status_window.destroy()
-            
-            if not parsed['success']:
-                messagebox.showerror("Error", f"Could not parse: {parsed['message']}")
-                return
-            
-            self.amount_entry.delete(0, tk.END)
-            self.amount_entry.insert(0, str(parsed['amount']))
-            if parsed['category']:
-                self.category_var.set(parsed['category'])
-            if parsed['description']:
-                self.desc_text.insert("1.0", parsed['description'])
-            
-            messagebox.showinfo("Success", "Parsed! Please review and save.")
-        except Exception as e:
-            messagebox.showerror("Error", f"Voice command failed: {str(e)}")
     
     def save_expense(self):
         """Save expense"""
@@ -873,14 +768,11 @@ class SettingsFrame(ctk.CTkFrame):
         inner = ctk.CTkFrame(settings_card, fg_color=theme['card_bg'])
         inner.pack(fill="both", expand=True, padx=20, pady=20)
         
-        ctk.CTkLabel(inner, text="Monthly Budget ($)", font=(config.FONT_FAMILY, 12, 'bold'), text_color=theme['text_primary']).pack(anchor="w", pady=(0, 5))
+        ctk.CTkLabel(inner, text="Monthly Budget (₹)", font=(config.FONT_FAMILY, 12, 'bold'), text_color=theme['text_primary']).pack(anchor="w", pady=(0, 5))
         self.budget_entry = ctk.CTkEntry(inner, height=40, placeholder_text="5000", fg_color=theme['entry_bg'], text_color=theme['entry_fg'], border_color=theme['entry_border'], border_width=2, font=(config.FONT_FAMILY, 12))
-        self.budget_entry.pack(fill="x", pady=(0, 20))
+        self.budget_entry.pack(fill="x", pady=(0, 30))
         
-        ctk.CTkLabel(inner, text="Currency", font=(config.FONT_FAMILY, 12, 'bold'), text_color=theme['text_primary']).pack(anchor="w", pady=(0, 5))
-        self.currency_var = tk.StringVar()
-        self.currency_combo = ctk.CTkComboBox(inner, variable=self.currency_var, values=config.CURRENCIES, height=40, fg_color=theme['entry_bg'], text_color=theme['entry_fg'], border_color=theme['entry_border'], border_width=2, font=(config.FONT_FAMILY, 12))
-        self.currency_combo.pack(fill="x", pady=(0, 30))
+        ctk.CTkLabel(inner, text="Currency: Indian Rupees (₹)", font=(config.FONT_FAMILY, 12, 'bold'), text_color=theme['accent']).pack(anchor="w", pady=(0, 20))
         
         button_frame = ctk.CTkFrame(inner, fg_color=theme['card_bg'])
         button_frame.pack(fill="x")
@@ -899,20 +791,18 @@ class SettingsFrame(ctk.CTkFrame):
         """Load settings"""
         settings = self.db.get_settings(self.controller.current_user_id)
         self.budget_entry.insert(0, str(settings[0]))
-        self.currency_var.set(settings[2])
     
     def save_settings(self):
         """Save settings"""
         try:
             budget = self.budget_entry.get()
-            currency = self.currency_var.get()
             
             valid, msg = validate_budget(budget)
             if not valid:
                 messagebox.showerror("Invalid Input", msg)
                 return
             
-            self.db.update_settings(user_id=self.controller.current_user_id, budget=float(budget), currency=currency)
+            self.db.update_settings(user_id=self.controller.current_user_id, budget=float(budget), currency="INR")
             messagebox.showinfo("Success", "Settings saved!")
         except Exception as e:
             messagebox.showerror("Error", f"Error saving: {str(e)}")
@@ -924,10 +814,10 @@ class SettingsFrame(ctk.CTkFrame):
             return
         
         try:
-            self.db.export_to_excel(file_path)
-            messagebox.showinfo("Success", "Data exported!")
+            self.db.export_to_excel(self.controller.current_user_id, file_path)
+            messagebox.showinfo("Success", "Data exported successfully!")
         except Exception as e:
-            messagebox.showerror("Error", f"Failed: {str(e)}")
+            messagebox.showerror("Error", f"Export failed: {str(e)}")
     
     def refresh(self):
         """Refresh"""
